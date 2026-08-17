@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>300 LLM, Fine-Tuning & Agentic AI Interview Questions | Career with Chaitanya</title>
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-alt:#141414;
+    --card:#161616;
+    --border:#2a2a2a;
+    --orange:#ff8c1a;
+    --orange-dim:#c96c10;
+    --orange-glow:rgba(255,140,26,0.15);
+    --text:#f0f0f0;
+    --text-dim:#a8a8a8;
+    --green:#3ddc84;
+    --yellow:#ffcf3d;
+    --red:#ff5c5c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Segoe UI', Roboto, -apple-system, sans-serif;
+    line-height:1.5;
+    padding-bottom:60px;
+  }
+  a{color:var(--orange);}
+
+  /* PLAYLIST HERO */
+  .playlist-hero{
+    display:block;
+    text-decoration:none;
+    background:linear-gradient(135deg, #1a1005 0%, #0a0a0a 60%);
+    border-bottom:1px solid var(--orange-dim);
+    padding:22px 20px;
+    position:relative;
+    overflow:hidden;
+  }
+  .playlist-hero::before{
+    content:"";
+    position:absolute;
+    top:-60%; right:-10%;
+    width:500px; height:500px;
+    background:radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .playlist-hero-inner{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:22px;
+    position:relative;
+  }
+  .playlist-icon{
+    flex-shrink:0;
+    width:76px; height:76px;
+    border-radius:50%;
+    background:var(--orange);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 0 6px var(--orange-glow), 0 8px 24px rgba(255,140,26,0.35);
+    transition:transform .2s ease;
+  }
+  .playlist-hero:hover .playlist-icon{transform:scale(1.06);}
+  .playlist-icon svg{width:32px; height:32px; margin-left:4px;}
+  .playlist-text{flex:1; min-width:0;}
+  .playlist-eyebrow{
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:4px;
+  }
+  .playlist-title{
+    font-size:clamp(18px, 3vw, 26px);
+    font-weight:800;
+    color:var(--text);
+    margin-bottom:4px;
+  }
+  .playlist-sub{
+    color:var(--text-dim);
+    font-size:13.5px;
+  }
+  .playlist-cta{
+    flex-shrink:0;
+    background:var(--orange);
+    color:#0a0a0a;
+    font-weight:700;
+    font-size:13.5px;
+    padding:12px 22px;
+    border-radius:10px;
+    white-space:nowrap;
+  }
+  @media (max-width:640px){
+    .playlist-hero-inner{flex-wrap:wrap; text-align:center; justify-content:center;}
+    .playlist-text{flex-basis:100%; order:2;}
+    .playlist-cta{order:3; margin:0 auto;}
+    .playlist-icon{order:1;}
+  }
+
+  /* HEADER */
+  header{
+    background:linear-gradient(180deg, #141414 0%, #0a0a0a 100%);
+    border-bottom:1px solid var(--border);
+    padding:36px 20px 28px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    top:-50%; left:50%;
+    width:600px; height:600px;
+    background:radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+    transform:translateX(-50%);
+    pointer-events:none;
+  }
+  .brand{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--orange);
+    font-weight:700;
+    border:1px solid var(--orange-dim);
+    padding:6px 16px;
+    border-radius:30px;
+    margin-bottom:18px;
+    position:relative;
+  }
+  h1{
+    font-size:clamp(24px, 4vw, 40px);
+    color:var(--text);
+    margin-bottom:10px;
+    position:relative;
+  }
+  h1 span{color:var(--orange);}
+  .subtitle{
+    color:var(--text-dim);
+    font-size:16px;
+    max-width:700px;
+    margin:0 auto 22px;
+    position:relative;
+  }
+  .header-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    position:relative;
+  }
+  .header-links a{
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    padding:9px 18px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    color:var(--text);
+    transition:all .2s ease;
+  }
+  .header-links a.primary{
+    background:var(--orange);
+    color:#0a0a0a;
+    border-color:var(--orange);
+  }
+  .header-links a:hover{
+    border-color:var(--orange);
+    color:var(--orange);
+  }
+  .header-links a.primary:hover{
+    background:var(--orange-dim);
+    color:#0a0a0a;
+  }
+
+  /* STATS BAR */
+  .stats-bar{
+    max-width:1100px;
+    margin:-20px auto 0;
+    padding:0 20px;
+    position:relative;
+    z-index:2;
+  }
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
+    gap:12px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+  }
+  .stat{
+    text-align:center;
+    border-right:1px solid var(--border);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-size:26px;
+    font-weight:800;
+    color:var(--orange);
+  }
+  .stat .label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--text-dim);
+    margin-top:2px;
+  }
+
+  /* CONTROLS */
+  .controls{
+    max-width:1100px;
+    margin:24px auto 0;
+    padding:0 20px;
+  }
+  .search-wrap{
+    position:relative;
+    margin-bottom:14px;
+  }
+  #searchInput{
+    width:100%;
+    padding:14px 18px 14px 44px;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:12px;
+    color:var(--text);
+    font-size:15px;
+    outline:none;
+    transition:border-color .2s;
+  }
+  #searchInput:focus{border-color:var(--orange);}
+  .search-icon{
+    position:absolute;
+    left:16px; top:50%;
+    transform:translateY(-50%);
+    color:var(--text-dim);
+    font-size:16px;
+    pointer-events:none;
+  }
+  .filter-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .filter-row .filter-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--text-dim);
+    width:100%;
+    margin-top:8px;
+  }
+  .chip{
+    padding:8px 16px;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:20px;
+    color:var(--text-dim);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .15s ease;
+    user-select:none;
+    white-space:nowrap;
+  }
+  .chip:hover{border-color:var(--orange-dim); color:var(--text);}
+  .chip.active{
+    background:var(--orange);
+    color:#0a0a0a;
+    border-color:var(--orange);
+  }
+  .toolbar-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid var(--border);
+  }
+  #resultCount{
+    color:var(--text-dim);
+    font-size:13px;
+  }
+  #resultCount b{color:var(--orange);}
+  .toolbar-actions{
+    display:flex;
+    gap:8px;
+  }
+  .btn-small{
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    padding:7px 14px;
+    border-radius:8px;
+    font-size:12px;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .btn-small:hover{border-color:var(--orange); color:var(--orange);}
+
+  /* QUESTION LIST */
+  #questionList{
+    max-width:1100px;
+    margin:20px auto 0;
+    padding:0 20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .q-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    transition:border-color .2s;
+  }
+  .q-card.done{border-color:var(--green);}
+  .q-header{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:16px 18px;
+    cursor:pointer;
+  }
+  .q-check{
+    flex-shrink:0;
+    width:22px; height:22px;
+    border-radius:6px;
+    border:2px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    color:transparent;
+    margin-top:2px;
+    transition:all .15s;
+  }
+  .q-check.checked{
+    background:var(--green);
+    border-color:var(--green);
+    color:#0a0a0a;
+  }
+  .q-main{flex:1; min-width:0;}
+  .q-meta{
+    display:flex;
+    gap:8px;
+    margin-bottom:6px;
+    flex-wrap:wrap;
+  }
+  .tag{
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    padding:3px 9px;
+    border-radius:5px;
+  }
+  .tag.cat{background:var(--orange-glow); color:var(--orange);}
+  .tag.diff-Easy{background:rgba(61,220,132,0.15); color:var(--green);}
+  .tag.diff-Medium{background:rgba(255,207,61,0.15); color:var(--yellow);}
+  .tag.diff-Hard{background:rgba(255,92,92,0.15); color:var(--red);}
+  .q-id{color:var(--text-dim); font-size:11px; font-weight:600;}
+  .q-text{
+    font-size:15px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .q-arrow{
+    color:var(--text-dim);
+    font-size:14px;
+    margin-top:4px;
+    transition:transform .2s;
+    flex-shrink:0;
+  }
+  .q-card.open .q-arrow{transform:rotate(180deg); color:var(--orange);}
+  .q-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+    padding:0 18px;
+  }
+  .q-card.open .q-answer{
+    max-height:400px;
+    padding:0 18px 18px 52px;
+  }
+  .q-answer p{
+    color:var(--text-dim);
+    font-size:14px;
+    border-top:1px solid var(--border);
+    padding-top:12px;
+  }
+  .q-answer strong{color:var(--orange); font-weight:700;}
+
+  #emptyState{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--text-dim);
+    display:none;
+  }
+  #emptyState .big{font-size:38px; margin-bottom:10px;}
+
+  /* FOOTER CTA */
+  footer{
+    max-width:1100px;
+    margin:50px auto 0;
+    padding:30px 20px;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+  footer .brand-foot{
+    color:var(--orange);
+    font-weight:800;
+    font-size:18px;
+    margin-bottom:6px;
+  }
+  footer p{color:var(--text-dim); font-size:13px; margin-bottom:16px;}
+  footer .foot-links{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+  }
+  footer .foot-links a{
+    color:var(--text-dim);
+    text-decoration:none;
+    font-size:13px;
+    border:1px solid var(--border);
+    padding:8px 16px;
+    border-radius:8px;
+  }
+  footer .foot-links a:hover{color:var(--orange); border-color:var(--orange);}
+
+  /* progress bar sticky */
+  #progressBarWrap{
+    position:sticky;
+    top:0;
+    z-index:10;
+    height:4px;
+    background:var(--border);
+  }
+  #progressBarFill{
+    height:100%;
+    width:0%;
+    background:var(--orange);
+    transition:width .3s ease;
+  }
+
+  @media (max-width:600px){
+    .stat{border-right:none; border-bottom:1px solid var(--border); padding-bottom:8px;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div id="progressBarWrap"><div id="progressBarFill"></div></div>
+
+<a class="playlist-hero" href="https://www.youtube.com/playlist?list=PLteFojtUYuJMf8QXXQ_02ozA8y-Yp7gIs" target="_blank" rel="noopener">
+  <div class="playlist-hero-inner">
+    <div class="playlist-icon">
+      <svg viewBox="0 0 24 24" fill="#0a0a0a"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <div class="playlist-text">
+      <div class="playlist-eyebrow">Free Resource · Career with Chaitanya</div>
+      <div class="playlist-title">Watch the Full Agentic AI YouTube Playlist</div>
+      <div class="playlist-sub">Learn the concepts behind these 300 questions with hands-on videos — tap to open on YouTube.</div>
+    </div>
+    <div class="playlist-cta">▶ Watch Now</div>
+  </div>
+</a>
+
+<header>
+  <div class="brand">Career with Chaitanya</div>
+  <h1>300 <span>LLM, Fine-Tuning & Agentic AI</span> Interview Questions</h1>
+  <p class="subtitle">A complete prep bank covering LLM fundamentals, fine-tuning, agentic AI, RAG, prompt engineering, and LLMOps — built for engineers gearing up for AI/ML and Agentic AI interviews.</p>
+  <div class="header-links">
+    <a href="https://www.instagram.com/careerwithchaitanya" target="_blank" rel="noopener" class="primary">Follow @careerwithchaitanya</a>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat"><div class="num">300</div><div class="label">Questions</div></div>
+    <div class="stat"><div class="num">6</div><div class="label">Categories</div></div>
+    <div class="stat"><div class="num" id="statDone">0</div><div class="label">Completed</div></div>
+    <div class="stat"><div class="num" id="statPercent">0%</div><div class="label">Progress</div></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search questions (e.g. LoRA, RAG, hallucination, ReAct)...">
+  </div>
+
+  <div class="filter-row" id="categoryFilters">
+    <span class="filter-label">Category</span>
+  </div>
+  <div class="filter-row" id="difficultyFilters">
+    <span class="filter-label">Difficulty</span>
+  </div>
+
+  <div class="toolbar-row">
+    <div id="resultCount">Showing <b>300</b> of 300 questions</div>
+    <div class="toolbar-actions">
+      <button class="btn-small" id="expandAllBtn">Expand All</button>
+      <button class="btn-small" id="resetProgressBtn">Reset Progress</button>
+    </div>
+  </div>
+</div>
+
+<div id="questionList"></div>
+<div id="emptyState">
+  <div class="big">🤷</div>
+  <div>No questions match your filters. Try clearing search or filters.</div>
+</div>
+
+<footer>
+  <div class="brand-foot">Career with Chaitanya</div>
+  <p>Helping engineers and freshers build real, job-ready skills in Full-Stack, DSA, and Agentic AI.</p>
+  <div class="foot-links">
+    <a href="https://www.youtube.com/playlist?list=PLteFojtUYuJMf8QXXQ_02ozA8y-Yp7gIs" target="_blank" rel="noopener">📺 Agentic AI YouTube Playlist</a>
+    <a href="https://www.instagram.com/careerwithchaitanya" target="_blank" rel="noopener">📩 DM on Instagram</a>
+  </div>
+</footer>
+
+<script>
+const QUESTIONS = [{"id": 1, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is a Large Language Model (LLM)?", "answer": "A neural network, usually Transformer-based, trained on massive text corpora to predict the next token, giving it broad language understanding and generation ability."}, {"id": 2, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is the Transformer architecture?", "answer": "A neural network architecture built entirely on attention mechanisms (no recurrence), enabling parallel processing of sequences and long-range dependency modeling."}, {"id": 3, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "Explain the self-attention mechanism.", "answer": "Self-attention lets each token in a sequence weigh the relevance of every other token to itself, producing context-aware representations."}, {"id": 4, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is multi-head attention and why use multiple heads?", "answer": "It runs several attention operations in parallel with different learned projections, letting the model capture different types of relationships simultaneously."}, {"id": 5, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What are positional encodings and why are they needed?", "answer": "Since attention has no inherent notion of order, positional encodings inject sequence position information into token embeddings."}, {"id": 6, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "Difference between encoder-only, decoder-only, and encoder-decoder models?", "answer": "Encoder-only (BERT) is best for understanding tasks, decoder-only (GPT) for generation, and encoder-decoder (T5) for sequence-to-sequence tasks like translation."}, {"id": 7, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is tokenization and why is it needed?", "answer": "Tokenization splits text into subword units the model can process numerically, balancing vocabulary size against sequence length."}, {"id": 8, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "Compare BPE, WordPiece, and SentencePiece tokenizers.", "answer": "BPE merges frequent character pairs iteratively; WordPiece is similar but merges based on likelihood; SentencePiece works on raw text without pre-tokenization, useful for multiple languages."}, {"id": 9, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is a context window / context length?", "answer": "The maximum number of tokens (input + output) a model can process at once in a single call."}, {"id": 10, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What causes hallucination in LLMs?", "answer": "Hallucination arises because models generate statistically plausible text rather than verified facts, especially when parametric knowledge is incomplete or outdated."}, {"id": 11, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is perplexity and how is it used to evaluate LLMs?", "answer": "Perplexity measures how well a model predicts a sample; lower perplexity means the model is less 'surprised' by the actual next tokens."}, {"id": 12, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is the difference between autoregressive and masked language models?", "answer": "Autoregressive models predict the next token given previous ones (GPT-style); masked models predict masked tokens using bidirectional context (BERT-style)."}, {"id": 13, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "Explain the concept of embeddings in LLMs.", "answer": "Embeddings are dense vector representations of tokens or text that capture semantic meaning, allowing similar concepts to lie close in vector space."}, {"id": 14, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is temperature in sampling and how does it affect output?", "answer": "Temperature scales the probability distribution before sampling; low values make output more deterministic, high values increase randomness/creativity."}, {"id": 15, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is top-k sampling?", "answer": "A decoding strategy that restricts sampling to the k most probable next tokens, discarding the long tail of unlikely options."}, {"id": 16, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is top-p (nucleus) sampling?", "answer": "Nucleus sampling selects from the smallest set of tokens whose cumulative probability exceeds p, adapting the candidate pool size dynamically."}, {"id": 17, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is beam search and how does it differ from sampling?", "answer": "Beam search keeps the top-N most probable sequences at each step to find high-likelihood outputs deterministically, unlike sampling which introduces randomness."}, {"id": 18, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is the softmax function's role in LLM output?", "answer": "Softmax converts raw logits into a normalized probability distribution over the vocabulary for the next-token prediction."}, {"id": 19, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "Explain the scaling laws for LLMs (Chinchilla, Kaplan et al.).", "answer": "Scaling laws describe how model performance improves predictably with more parameters, data, and compute; Chinchilla showed data and parameters should scale together, not just parameters."}, {"id": 20, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is emergent behavior in LLMs?", "answer": "Capabilities that appear suddenly at scale but are largely absent in smaller models, such as multi-step reasoning or in-context learning."}, {"id": 21, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is in-context learning?", "answer": "The ability of an LLM to learn a task from examples provided directly in the prompt, without updating its weights."}, {"id": 22, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is the difference between few-shot and zero-shot prompting?", "answer": "Zero-shot gives the model only an instruction with no examples; few-shot includes a handful of example input-output pairs to guide behavior."}, {"id": 23, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is the difference between GPT, BERT, and T5 architectures?", "answer": "GPT is decoder-only for generation, BERT is encoder-only for understanding tasks, and T5 is encoder-decoder framing every task as text-to-text."}, {"id": 24, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is Mixture of Experts (MoE) and why is it used?", "answer": "MoE routes each input to a subset of specialized 'expert' sub-networks, increasing model capacity without proportionally increasing compute per token."}, {"id": 25, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is the KV cache and why does it speed up inference?", "answer": "It stores previously computed key/value attention tensors so they aren't recomputed at every generation step, greatly speeding up autoregressive decoding."}, {"id": 26, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is model quantization?", "answer": "Reducing the numerical precision of model weights (e.g., FP16 to INT8/INT4) to shrink memory footprint and speed up inference with minimal accuracy loss."}, {"id": 27, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "Explain layer normalization vs batch normalization.", "answer": "Layer norm normalizes across features within a single example, making it suitable for variable-length sequences; batch norm normalizes across the batch dimension."}, {"id": 28, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is the role of residual connections in Transformers?", "answer": "They add the input of a sublayer to its output, easing gradient flow and allowing much deeper networks to train stably."}, {"id": 29, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is the vanishing gradient problem and how do Transformers avoid it?", "answer": "Gradients shrink as they backpropagate through many layers; residual connections and normalization in Transformers help gradients flow more directly."}, {"id": 30, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is a causal mask in decoder-only models?", "answer": "A mask that prevents a token from attending to future tokens, enforcing the autoregressive left-to-right generation constraint."}, {"id": 31, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What are logits?", "answer": "The raw, unnormalized output scores from the final layer of a model before softmax converts them into probabilities."}, {"id": 32, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is the difference between pretraining and fine-tuning?", "answer": "Pretraining learns general language patterns from massive unlabeled corpora; fine-tuning adapts that pretrained model to a narrower task or behavior using smaller, targeted data."}, {"id": 33, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is transfer learning in the context of LLMs?", "answer": "Reusing knowledge learned during pretraining on one broad task and applying/adapting it to a different, often more specific, downstream task."}, {"id": 34, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is a foundation model?", "answer": "A large model pretrained on broad data that serves as a general-purpose base, adaptable to many downstream tasks via fine-tuning or prompting."}, {"id": 35, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is catastrophic forgetting?", "answer": "When a model loses previously learned capabilities after being trained/fine-tuned on new data or tasks."}, {"id": 36, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What are parameters vs hyperparameters in an LLM?", "answer": "Parameters (weights) are learned automatically during training; hyperparameters (learning rate, batch size, etc.) are set manually before training begins."}, {"id": 37, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is FLOPs and why does it matter for LLM training?", "answer": "Floating point operations per second measure computational cost; total training FLOPs roughly determine cost, time, and hardware requirements."}, {"id": 38, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is the difference between dense and sparse models?", "answer": "Dense models activate all parameters for every input; sparse models (like MoE) activate only a subset, improving efficiency at scale."}, {"id": 39, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is rotary positional embedding (RoPE)?", "answer": "A technique that encodes position by rotating query/key vectors, enabling better extrapolation to longer sequences than fixed positional embeddings."}, {"id": 40, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is ALiBi (Attention with Linear Biases)?", "answer": "A positional encoding method that biases attention scores based on token distance, allowing models to generalize to longer sequences than seen in training."}, {"id": 41, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What distinguishes newer-generation model architectures from earlier GPT-style ones at a high level?", "answer": "Newer models generally use larger context windows, improved positional encodings, and efficiency techniques like MoE or grouped-query attention, without changing the core Transformer idea."}, {"id": 42, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What activation functions are commonly used in LLMs (GELU, SwiGLU)?", "answer": "GELU offers smoother gradients than ReLU; SwiGLU (a gated variant) is widely used in modern LLMs for improved training stability and performance."}, {"id": 43, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is model distillation?", "answer": "Training a smaller 'student' model to mimic the outputs/behavior of a larger 'teacher' model, retaining much of its capability at lower cost."}, {"id": 44, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What are the cost/latency tradeoffs of a large context window model?", "answer": "Larger context windows increase memory and compute cost roughly quadratically with attention, raising latency and inference cost for long inputs."}, {"id": 45, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "Explain gradient checkpointing.", "answer": "A memory-saving technique that recomputes intermediate activations during the backward pass instead of storing them all, trading compute for memory."}, {"id": 46, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is mixed precision training (FP16/BF16)?", "answer": "Training using lower-precision floating point formats alongside FP32 to speed up computation and reduce memory use while preserving numerical stability."}, {"id": 47, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What is the role of tokenizer vocabulary size?", "answer": "A larger vocabulary reduces sequence length per input but increases embedding table size; it's a tradeoff between compute and representation granularity."}, {"id": 48, "category": "LLM Fundamentals", "difficulty": "Hard", "question": "What is the next-token prediction objective?", "answer": "The core training objective of most LLMs: predict the probability distribution of the next token given all preceding tokens."}, {"id": 49, "category": "LLM Fundamentals", "difficulty": "Easy", "question": "What is the difference between open-source and proprietary/closed LLMs?", "answer": "Open-source models release weights (and sometimes training data/code) for self-hosting and modification, while proprietary models are accessed only via API with weights kept private."}, {"id": 50, "category": "LLM Fundamentals", "difficulty": "Medium", "question": "What are the main limitations of current LLMs?", "answer": "They can hallucinate, struggle with precise arithmetic and long-term consistency, lack true real-time knowledge, and can reflect biases present in training data."}, {"id": 51, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is fine-tuning in the context of LLMs?", "answer": "Continuing to train a pretrained model on a smaller, task- or domain-specific dataset to adapt its behavior or knowledge."}, {"id": 52, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "Difference between full fine-tuning and parameter-efficient fine-tuning (PEFT)?", "answer": "Full fine-tuning updates all model weights; PEFT methods update only a small subset of added or selected parameters, drastically cutting compute and memory needs."}, {"id": 53, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is LoRA (Low-Rank Adaptation)?", "answer": "A PEFT technique that freezes the original weights and injects small trainable low-rank matrices into layers, reducing trainable parameters significantly."}, {"id": 54, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is QLoRA and how does it differ from LoRA?", "answer": "QLoRA combines LoRA with 4-bit quantization of the base model, enabling fine-tuning of very large models on consumer-grade GPUs."}, {"id": 55, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is prompt tuning?", "answer": "A PEFT method that learns a small set of continuous 'soft prompt' embeddings prepended to the input, while the base model stays frozen."}, {"id": 56, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is prefix tuning?", "answer": "Similar to prompt tuning but learns trainable prefix vectors inserted into every transformer layer, not just the input embeddings."}, {"id": 57, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is adapter-based fine-tuning?", "answer": "Inserting small trainable bottleneck layers ('adapters') between existing Transformer layers while freezing the original weights."}, {"id": 58, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is instruction tuning?", "answer": "Fine-tuning a model on datasets of instruction-response pairs so it better follows natural language commands and generalizes to unseen instructions."}, {"id": 59, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is RLHF (Reinforcement Learning from Human Feedback)?", "answer": "A technique that fine-tunes a model using a reward model trained on human preference data, optimizing the policy via reinforcement learning to align outputs with human preferences."}, {"id": 60, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is DPO (Direct Preference Optimization) and how does it compare to RLHF?", "answer": "DPO directly optimizes the model on preference pairs using a simple classification-style loss, skipping the separate reward model and RL loop that RLHF requires."}, {"id": 61, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is supervised fine-tuning (SFT)?", "answer": "Fine-tuning a model on labeled input-output pairs using standard supervised learning, typically the first stage before preference-based alignment."}, {"id": 62, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is a reward model in RLHF?", "answer": "A model trained on human preference comparisons to score outputs, providing the reward signal used to optimize the policy model."}, {"id": 63, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is PPO in the context of RLHF?", "answer": "Proximal Policy Optimization, a reinforcement learning algorithm used to update the policy model against the reward model while constraining how far it drifts from the original."}, {"id": 64, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What are the main challenges in fine-tuning large models on limited GPU memory?", "answer": "Storing full-precision weights, optimizer states, and activations for billions of parameters; PEFT methods and quantization mitigate this by shrinking trainable/stored data."}, {"id": 65, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is catastrophic forgetting during fine-tuning and how to mitigate it?", "answer": "The model losing general capabilities while specializing; mitigated via lower learning rates, mixing in general data, or using PEFT which touches fewer parameters."}, {"id": 66, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is dataset curation and why does it matter for fine-tuning?", "answer": "Carefully selecting, cleaning, and balancing training examples; poor-quality or biased data directly degrades fine-tuned model behavior."}, {"id": 67, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is overfitting during fine-tuning and how to detect it?", "answer": "When the model memorizes training data rather than generalizing; detected via rising validation loss while training loss keeps falling."}, {"id": 68, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is the role of learning rate schedules during fine-tuning?", "answer": "They control how the learning rate changes over training (e.g., warmup then decay), stabilizing early training and refining convergence later."}, {"id": 69, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is gradient accumulation?", "answer": "Simulating a larger batch size by accumulating gradients over several smaller mini-batches before performing a weight update, useful when memory is limited."}, {"id": 70, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is the difference between full fine-tuning and continual pretraining?", "answer": "Continual pretraining keeps using the original next-token objective on new raw data to expand knowledge; fine-tuning usually targets specific task/behavior adaptation."}, {"id": 71, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is domain adaptation?", "answer": "Fine-tuning a general model on data from a specific domain (e.g., legal, medical) so it better understands domain terminology and context."}, {"id": 72, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is few-shot fine-tuning?", "answer": "Fine-tuning using a very small number of labeled examples, often combined with PEFT to avoid overfitting on limited data."}, {"id": 73, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is synthetic data generation for fine-tuning?", "answer": "Using an LLM (or rules) to generate additional training examples, useful when real labeled data is scarce or expensive to collect."}, {"id": 74, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is data augmentation in NLP fine-tuning?", "answer": "Techniques like paraphrasing, back-translation, or synonym replacement used to expand and diversify a training dataset."}, {"id": 75, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is the role of validation loss during fine-tuning?", "answer": "It tracks performance on held-out data during training, signaling generalization and helping detect overfitting."}, {"id": 76, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is early stopping?", "answer": "Halting training once validation performance stops improving, to avoid overfitting and save compute."}, {"id": 77, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is the difference between LoRA rank and alpha parameters?", "answer": "Rank controls the size of the low-rank matrices (capacity), while alpha is a scaling factor controlling how strongly the LoRA update affects the frozen weights."}, {"id": 78, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What quantization levels are commonly used with QLoRA (4-bit, 8-bit)?", "answer": "4-bit (NF4) is most common for maximum memory savings; 8-bit offers a middle ground between memory efficiency and precision."}, {"id": 79, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is the PEFT library used for (Hugging Face)?", "answer": "It provides standardized implementations of LoRA, prefix tuning, prompt tuning, and other parameter-efficient methods for easy integration with Transformers models."}, {"id": 80, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is model merging (e.g., weight averaging, TIES, DARE)?", "answer": "Combining weights or LoRA adapters from multiple fine-tuned models into one, often to blend capabilities without retraining from scratch."}, {"id": 81, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is knowledge distillation in fine-tuning contexts?", "answer": "Fine-tuning a smaller model to replicate a larger model's outputs, compressing capability into a cheaper, faster model."}, {"id": 82, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is the difference between task-specific and general-purpose fine-tuning?", "answer": "Task-specific fine-tuning optimizes narrowly for one use case; general-purpose (instruction) fine-tuning aims to improve broad instruction-following across many tasks."}, {"id": 83, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What are common evaluation metrics for a fine-tuned model?", "answer": "Task-specific metrics like accuracy/F1 for classification, BLEU/ROUGE for generation, or human/LLM-judge preference scores for open-ended tasks."}, {"id": 84, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is the role of a system prompt vs fine-tuning for behavior control?", "answer": "System prompts steer behavior at inference time without changing weights and are easy to iterate; fine-tuning bakes behavior into the model, which is more durable but costlier."}, {"id": 85, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "When should you fine-tune vs use RAG vs use prompting?", "answer": "Prompting/RAG suit fast-changing knowledge and quick iteration; fine-tuning suits stable behavioral/style changes or when repeated context injection is too costly."}, {"id": 86, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is a chat template / instruction format?", "answer": "A defined structure (roles, delimiters) that formats conversation turns consistently so the model correctly distinguishes system, user, and assistant messages."}, {"id": 87, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is dataset formatting for instruction fine-tuning (e.g., Alpaca format)?", "answer": "Structuring data as instruction, optional input, and expected output fields so the model learns a consistent instruction-following pattern."}, {"id": 88, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is the risk of bias amplification during fine-tuning?", "answer": "Fine-tuning on skewed or unrepresentative data can reinforce and amplify existing biases present in that dataset."}, {"id": 89, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is continual learning and its challenges for LLMs?", "answer": "Continually updating a model with new data over time; the main challenge is avoiding catastrophic forgetting of earlier knowledge."}, {"id": 90, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is multi-task fine-tuning?", "answer": "Fine-tuning a single model on multiple tasks simultaneously so it generalizes across them rather than specializing in just one."}, {"id": 91, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is the role of batch size in fine-tuning stability?", "answer": "Larger batches give more stable gradient estimates but need more memory; too small a batch can cause noisy, unstable training."}, {"id": 92, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is weight decay and why is it used?", "answer": "A regularization technique that penalizes large weights, helping prevent overfitting during training."}, {"id": 93, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is the purpose of a warmup phase in training?", "answer": "Gradually increasing the learning rate from near zero at the start of training to avoid destabilizing the model with large early updates."}, {"id": 94, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is FSDP (Fully Sharded Data Parallel) training?", "answer": "A distributed training technique that shards model parameters, gradients, and optimizer states across GPUs to train models too large for a single device."}, {"id": 95, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is DeepSpeed ZeRO and its optimization stages?", "answer": "A memory optimization framework that progressively shards optimizer states, gradients, and parameters (stages 1-3) across GPUs to enable training of very large models."}, {"id": 96, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What GPU memory considerations matter when fine-tuning a 7B/13B/70B model?", "answer": "Model weights, optimizer states, gradients, and activations all consume memory; techniques like LoRA, quantization, and sharding are often needed as model size grows."}, {"id": 97, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What is checkpoint averaging?", "answer": "Averaging the weights of several training checkpoints (often near the end of training) to produce a more stable, better-generalizing final model."}, {"id": 98, "category": "Fine-Tuning & Training", "difficulty": "Hard", "question": "What is the role of human evaluation vs automated metrics in fine-tuning?", "answer": "Automated metrics are cheap and scalable but can miss nuance; human evaluation captures quality, coherence, and preference better but is slower and costlier."}, {"id": 99, "category": "Fine-Tuning & Training", "difficulty": "Easy", "question": "What is a common failure mode when fine-tuning on too little data?", "answer": "The model overfits and memorizes the small dataset, losing generalization and sometimes degrading in unrelated capabilities."}, {"id": 100, "category": "Fine-Tuning & Training", "difficulty": "Medium", "question": "What ethical considerations arise when fine-tuning on proprietary or user data?", "answer": "Consent, data privacy, potential leakage of sensitive information in outputs, and ensuring compliance with data usage agreements."}, {"id": 101, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is an AI agent?", "answer": "A system that uses an LLM to perceive input, reason, decide on actions (including tool use), and act autonomously toward a goal, often in a loop."}, {"id": 102, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "Difference between a chatbot and an agent?", "answer": "A chatbot mainly responds conversationally; an agent can plan, call tools, take multi-step actions, and pursue goals with some autonomy."}, {"id": 103, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is the ReAct (Reason+Act) framework?", "answer": "A prompting pattern where the model interleaves reasoning traces ('thoughts') with actions (tool calls), observing results before deciding the next step."}, {"id": 104, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is tool calling / function calling in LLM agents?", "answer": "A mechanism letting the model invoke external functions or APIs with structured arguments, extending it beyond pure text generation."}, {"id": 105, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is an agent's 'memory' and why is it needed?", "answer": "Stored context (conversation history, facts, past actions) that lets an agent maintain continuity and learn from earlier steps within or across sessions."}, {"id": 106, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "Difference between short-term and long-term memory in agents?", "answer": "Short-term memory holds the current session's context window; long-term memory persists information across sessions, often via a vector store or database."}, {"id": 107, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is a planner-executor architecture?", "answer": "A design where one component (planner) breaks a goal into steps and another (executor) carries out each step, often with tools."}, {"id": 108, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is CrewAI and what problem does it solve?", "answer": "A framework for orchestrating multiple role-based agents that collaborate on tasks, simplifying multi-agent workflow design."}, {"id": 109, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is LangChain and its core components?", "answer": "A framework providing building blocks like chains, prompts, memory, retrievers, and tool integrations for building LLM applications."}, {"id": 110, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is LangGraph and how does it differ from LangChain?", "answer": "LangGraph models agent workflows as explicit state graphs with nodes and edges, giving finer control over branching, loops, and state than LangChain's chain abstraction."}, {"id": 111, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is AutoGen and what is it used for?", "answer": "A Microsoft framework for building multi-agent conversations where agents (including human proxies) collaborate to solve tasks via message passing."}, {"id": 112, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is a multi-agent system?", "answer": "An architecture where multiple specialized agents interact, each handling a subtask, coordinated toward a shared overall goal."}, {"id": 113, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is agent orchestration?", "answer": "The process of coordinating multiple agents or steps, deciding execution order, delegation, and how results are combined."}, {"id": 114, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is the role of a 'supervisor' agent in multi-agent setups?", "answer": "It oversees worker agents, delegates subtasks, and decides when the overall goal is complete or needs redirection."}, {"id": 115, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is task decomposition in agentic workflows?", "answer": "Breaking a complex goal into smaller, manageable subtasks that can be tackled sequentially or in parallel."}, {"id": 116, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is the difference between a single-agent and multi-agent pipeline?", "answer": "A single agent handles the entire task alone; a multi-agent pipeline splits responsibilities across specialized agents that coordinate."}, {"id": 117, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is self-reflection / self-critique in agents?", "answer": "A pattern where the agent evaluates its own output or plan and revises it before finalizing, improving quality."}, {"id": 118, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is the 'chain of thought' technique and how do agents use it?", "answer": "Prompting the model to reason step by step; agents use this to expose intermediate reasoning before deciding on actions."}, {"id": 119, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is tree-of-thought reasoning?", "answer": "An extension of chain-of-thought where multiple reasoning paths are explored and evaluated like branches, picking the most promising one."}, {"id": 120, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is an agent loop (observe-think-act)?", "answer": "The repeating cycle where an agent perceives the current state, reasons about what to do, takes an action, then observes the new state."}, {"id": 121, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What are the risks of agent autonomy (e.g., runaway loops, unsafe actions)?", "answer": "Agents can loop indefinitely, take costly or destructive actions, or misuse tools if not properly constrained and monitored."}, {"id": 122, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is human-in-the-loop for agentic systems?", "answer": "A design where a human reviews or approves critical agent decisions before they're executed, adding a safety checkpoint."}, {"id": 123, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is a tool/function schema and why must it be well-defined?", "answer": "A structured definition of a tool's name, parameters, and types; a clear schema helps the model call tools correctly and reduces errors."}, {"id": 124, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is the difference between deterministic workflows and autonomous agents?", "answer": "Deterministic workflows follow a fixed sequence of steps; autonomous agents dynamically decide their next action based on reasoning at each step."}, {"id": 125, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is state management in agent frameworks?", "answer": "Tracking and updating the evolving context, variables, and history an agent needs across steps of a workflow."}, {"id": 126, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is an agent's 'scratchpad'?", "answer": "A working memory space where the agent records intermediate reasoning, tool outputs, and observations during a task."}, {"id": 127, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is the role of guardrails in agentic AI?", "answer": "Rules or checks (input/output validation, allowed actions) that constrain what an agent can do to keep it safe and on-task."}, {"id": 128, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is agent evaluation and why is it harder than evaluating single LLM calls?", "answer": "It requires assessing multi-step reasoning, tool use correctness, and final outcomes, not just one output, making it more complex than single-turn evaluation."}, {"id": 129, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is a vector store's role in agent memory?", "answer": "It stores embeddings of past interactions or knowledge, letting an agent retrieve semantically relevant memories on demand."}, {"id": 130, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is an MCP (Model Context Protocol) server?", "answer": "A standardized protocol that exposes tools, data, and resources to LLMs/agents in a consistent way, so agents can connect to external systems without custom integration code."}, {"id": 131, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is the difference between agents and traditional RPA (robotic process automation)?", "answer": "RPA follows fixed, rule-based scripts; agents use LLM reasoning to adapt dynamically to varying inputs and situations."}, {"id": 132, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is prompt chaining?", "answer": "Passing the output of one prompt as input to the next, building a multi-step pipeline of LLM calls."}, {"id": 133, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is a router agent?", "answer": "An agent that examines a request and directs it to the appropriate specialized agent, tool, or workflow."}, {"id": 134, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is a critic/verifier pattern in multi-agent design?", "answer": "One agent generates output while a separate 'critic' agent checks it for errors or quality issues before it's finalized."}, {"id": 135, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is the cost/latency tradeoff in multi-agent pipelines?", "answer": "More agents and reasoning steps improve quality/robustness but increase total tokens used, latency, and dollar cost per task."}, {"id": 136, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is an action space in agent design?", "answer": "The full set of possible actions (tools, API calls, responses) an agent is allowed to choose from at each step."}, {"id": 137, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is grounding in the context of agents?", "answer": "Tying an agent's reasoning and outputs to verifiable external data or tool results rather than relying purely on internal knowledge."}, {"id": 138, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is tool selection and how does an agent decide which tool to call?", "answer": "The model reasons over the task and available tool descriptions/schemas to pick the most relevant tool and arguments for the next step."}, {"id": 139, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is a 'hallucinated tool call' and how can it be prevented?", "answer": "When a model invents a tool, parameter, or result that doesn't exist; mitigated by strict schema validation and constrained tool sets."}, {"id": 140, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is an agent's system prompt / persona design?", "answer": "Instructions defining the agent's role, tone, constraints, and objectives that shape its behavior throughout a task."}, {"id": 141, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is the difference between synchronous and asynchronous agent execution?", "answer": "Synchronous execution waits for each step to finish before continuing; asynchronous execution allows steps or agents to run concurrently, improving throughput."}, {"id": 142, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What are common failure modes in agentic workflows (infinite loops, tool misuse)?", "answer": "Agents can get stuck repeating the same failed action, misuse tools with wrong parameters, or drift off-task without proper stopping conditions."}, {"id": 143, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is agentic RAG?", "answer": "Retrieval-augmented generation where an agent decides dynamically when and what to retrieve, potentially issuing multiple retrieval steps as reasoning progresses."}, {"id": 144, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is a workflow graph in LangGraph?", "answer": "A representation of an agent's process as nodes (steps/agents) and edges (transitions), supporting branching, loops, and conditional logic."}, {"id": 145, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is context window management in long-running agents?", "answer": "Strategies (summarization, truncation, memory offloading) to keep an agent's accumulated history within the model's context limit over long tasks."}, {"id": 146, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What is the role of caching in reducing agent costs?", "answer": "Storing results of repeated tool calls or LLM responses so identical or similar requests don't need to be recomputed."}, {"id": 147, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is an 'agentic app' vs a traditional app?", "answer": "A traditional app follows fixed logic paths; an agentic app uses an LLM to make dynamic decisions about what to do next."}, {"id": 148, "category": "Agentic AI & Architectures", "difficulty": "Hard", "question": "What is the difference between planning-based agents and reactive agents?", "answer": "Planning-based agents form a multi-step plan before acting; reactive agents decide the next action based only on the current observation."}, {"id": 149, "category": "Agentic AI & Architectures", "difficulty": "Easy", "question": "What security risks exist with agents that have tool/internet access (e.g., prompt injection)?", "answer": "Malicious content in retrieved data or tool outputs can trick the agent into taking unintended or harmful actions if inputs aren't sanitized."}, {"id": 150, "category": "Agentic AI & Architectures", "difficulty": "Medium", "question": "What is the likely future direction of agentic AI?", "answer": "Trends point toward more autonomous multi-agent ecosystems, standardized protocols for tool/agent interoperability, and stronger evaluation and safety tooling."}, {"id": 151, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is RAG (Retrieval-Augmented Generation)?", "answer": "A technique that retrieves relevant external documents at query time and feeds them into the LLM's context so it can generate grounded, up-to-date answers."}, {"id": 152, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "Why use RAG instead of fine-tuning for knowledge updates?", "answer": "RAG updates knowledge instantly by changing the underlying data source, avoiding the cost and delay of retraining the model."}, {"id": 153, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is a vector database and why is it used in RAG?", "answer": "A database optimized to store and search high-dimensional embeddings efficiently, enabling fast semantic similarity search over documents."}, {"id": 154, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is an embedding model?", "answer": "A model that converts text into a dense numeric vector capturing its semantic meaning, used for similarity search."}, {"id": 155, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is cosine similarity and its role in retrieval?", "answer": "A metric measuring the angle between two vectors; higher cosine similarity indicates more semantically similar text, used to rank retrieved documents."}, {"id": 156, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is chunking and why does chunk size matter?", "answer": "Splitting documents into smaller pieces before embedding; chunk size affects retrieval precision and how much context fits into the model's window."}, {"id": 157, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is chunk overlap and why is it used?", "answer": "Overlapping adjacent chunks preserves context that might otherwise be cut off at chunk boundaries, improving retrieval quality."}, {"id": 158, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is semantic search vs keyword search?", "answer": "Semantic search matches based on meaning via embeddings; keyword search matches exact or fuzzy term overlaps like traditional search engines."}, {"id": 159, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is hybrid search?", "answer": "Combining semantic (dense vector) search with keyword (sparse) search to leverage the strengths of both approaches."}, {"id": 160, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is re-ranking in RAG pipelines?", "answer": "A second-stage process that reorders initially retrieved documents using a more precise (often cross-encoder) model to improve relevance."}, {"id": 161, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is the difference between dense and sparse retrieval?", "answer": "Dense retrieval uses learned embeddings to capture semantic similarity; sparse retrieval relies on term-frequency-based methods like BM25."}, {"id": 162, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is BM25?", "answer": "A classic sparse ranking algorithm based on term frequency and inverse document frequency, still widely used in hybrid search setups."}, {"id": 163, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is a retriever vs a generator in RAG?", "answer": "The retriever finds relevant documents from a knowledge base; the generator (LLM) uses that retrieved context to produce the final answer."}, {"id": 164, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is context stuffing and its downsides?", "answer": "Cramming too much retrieved text into the prompt; it raises cost/latency and can dilute relevance or exceed context limits."}, {"id": 165, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is the 'lost in the middle' problem in long-context retrieval?", "answer": "Models tend to pay less attention to information placed in the middle of a long context compared to the beginning or end."}, {"id": 166, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is metadata filtering in vector search?", "answer": "Narrowing retrieval results using structured attributes (date, author, category) alongside semantic similarity for more precise results."}, {"id": 167, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is a knowledge graph and how can it complement RAG?", "answer": "A structured graph of entities and relationships; combining it with RAG allows more precise, relationship-aware retrieval beyond plain text similarity."}, {"id": 168, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is GraphRAG?", "answer": "A RAG variant that builds and retrieves from a knowledge graph representation of documents, enabling better multi-hop and relational reasoning."}, {"id": 169, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is query expansion?", "answer": "Automatically rewriting or augmenting a user's query with related terms to improve the chances of retrieving relevant documents."}, {"id": 170, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is HyDE (Hypothetical Document Embeddings)?", "answer": "A technique where the LLM first generates a hypothetical answer, then embeds and uses that to search for real documents more effectively."}, {"id": 171, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What are common vector databases (Pinecone, Weaviate, Chroma, FAISS)?", "answer": "Pinecone and Weaviate are managed/hosted vector DBs; Chroma is lightweight and developer-friendly; FAISS is a library for efficient similarity search, often self-hosted."}, {"id": 172, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is the role of an index in vector search (HNSW, IVF)?", "answer": "Indexing structures like HNSW (graph-based) or IVF (clustering-based) enable approximate nearest neighbor search that scales to millions of vectors efficiently."}, {"id": 173, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is embedding dimensionality and its tradeoffs?", "answer": "Higher dimensions can capture more nuance but increase storage and search cost; lower dimensions are cheaper but may lose semantic detail."}, {"id": 174, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is document preprocessing in a RAG pipeline?", "answer": "Cleaning, parsing, and structuring raw documents (removing noise, extracting text from PDFs, etc.) before chunking and embedding."}, {"id": 175, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is the difference between sentence-level and document-level embeddings?", "answer": "Sentence-level embeddings capture fine-grained meaning for precise retrieval; document-level embeddings summarize broader context but lose granularity."}, {"id": 176, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is retrieval latency and how is it optimized?", "answer": "The time taken to fetch relevant documents; optimized via efficient indexing, caching, and limiting the number of candidates searched."}, {"id": 177, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is the role of citations/source attribution in RAG outputs?", "answer": "Linking generated claims back to retrieved sources improves trust, verifiability, and helps users check the underlying information."}, {"id": 178, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is multi-hop retrieval?", "answer": "Retrieving iteratively across multiple steps, where each retrieval step is informed by the results of the previous one, needed for complex questions."}, {"id": 179, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is agentic/iterative retrieval?", "answer": "An agent dynamically decides whether to retrieve again, reformulate the query, or stop, rather than doing a single fixed retrieval pass."}, {"id": 180, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is the cold-start problem in RAG systems?", "answer": "When there's insufficient indexed data or usage history to retrieve high-quality relevant results, common in newly deployed systems."}, {"id": 181, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is a fallback strategy when retrieval returns no relevant results?", "answer": "Options include informing the user no answer was found, broadening the search, or falling back to the model's general knowledge with a caveat."}, {"id": 182, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is embedding drift and why can it be a problem?", "answer": "When the underlying embedding model changes, old and new embeddings become inconsistent, requiring re-embedding of the entire knowledge base."}, {"id": 183, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is the role of a cross-encoder in re-ranking?", "answer": "A cross-encoder jointly processes the query and a candidate document for a more accurate relevance score than comparing separate embeddings."}, {"id": 184, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is context window budgeting when combining multiple retrieved chunks?", "answer": "Deciding how many chunks and how much text to include so the combined context fits within the model's token limit while maximizing relevance."}, {"id": 185, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What are common RAG evaluation metrics (recall@k, precision, faithfulness)?", "answer": "Recall@k and precision measure retrieval quality; faithfulness/groundedness measures whether the generated answer is actually supported by retrieved context."}, {"id": 186, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is RAGAS?", "answer": "An evaluation framework specifically designed to score RAG pipelines on metrics like faithfulness, answer relevance, and context precision/recall."}, {"id": 187, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is the difference between naive RAG and advanced/modular RAG?", "answer": "Naive RAG does a single retrieve-then-generate pass; advanced RAG adds steps like query rewriting, re-ranking, and iterative retrieval for better quality."}, {"id": 188, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is self-RAG?", "answer": "A technique where the model itself decides when retrieval is needed and critiques its own generated output against retrieved evidence."}, {"id": 189, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is corrective RAG (CRAG)?", "answer": "An approach that evaluates retrieved documents' relevance and triggers corrective actions (like web search) when retrieval quality is poor."}, {"id": 190, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is document deduplication in a knowledge base?", "answer": "Removing near-duplicate documents/chunks to avoid redundant retrieval results and wasted context space."}, {"id": 191, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is the impact of stale/outdated data in a RAG knowledge base?", "answer": "It can cause the model to confidently generate outdated or incorrect answers, since RAG's accuracy depends entirely on the freshness of indexed data."}, {"id": 192, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is a retrieval pipeline's role in reducing hallucination?", "answer": "By grounding generation in retrieved, verifiable text, RAG reduces (but doesn't eliminate) the model's tendency to fabricate information."}, {"id": 193, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is the difference between structured and unstructured data retrieval?", "answer": "Structured retrieval queries organized data like databases/tables; unstructured retrieval searches free text such as documents or web pages."}, {"id": 194, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is a document loader in a RAG framework?", "answer": "A component that ingests data from various sources (PDFs, websites, databases) and converts it into a standard text format for processing."}, {"id": 195, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What are table/PDF parsing challenges in RAG ingestion?", "answer": "Preserving table structure, layout, and reading order from PDFs is difficult, and naive extraction can scramble or lose important information."}, {"id": 196, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is the role of prompt templates in combining retrieved context with a query?", "answer": "They define a consistent structure for inserting retrieved passages alongside the user's question so the model knows how to use the context."}, {"id": 197, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "What is caching in RAG systems to reduce cost?", "answer": "Storing results for repeated or similar queries so retrieval and generation don't need to be redone from scratch each time."}, {"id": 198, "category": "RAG & Retrieval", "difficulty": "Hard", "question": "What is multi-modal RAG?", "answer": "Retrieval-augmented generation that incorporates non-text data (images, tables, audio) alongside text in both retrieval and generation."}, {"id": 199, "category": "RAG & Retrieval", "difficulty": "Easy", "question": "What is the tradeoff between retrieval recall and precision?", "answer": "High recall retrieves more potentially relevant documents but risks noise; high precision returns fewer but more reliably relevant documents."}, {"id": 200, "category": "RAG & Retrieval", "difficulty": "Medium", "question": "When would you choose RAG over long-context models (or vice versa)?", "answer": "RAG suits large, frequently updated knowledge bases where only a fraction is relevant per query; long-context models suit smaller, static, or tightly coupled documents."}, {"id": 201, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is prompt engineering?", "answer": "The practice of designing and refining input prompts to elicit the most accurate, useful, or desired output from an LLM."}, {"id": 202, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is zero-shot prompting?", "answer": "Asking the model to perform a task using only an instruction, without providing any example demonstrations."}, {"id": 203, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is few-shot prompting?", "answer": "Providing a handful of example input-output pairs in the prompt to demonstrate the desired task pattern before the actual query."}, {"id": 204, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is chain-of-thought (CoT) prompting?", "answer": "Encouraging the model to reason step by step before giving a final answer, which improves performance on multi-step reasoning tasks."}, {"id": 205, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is a system prompt vs a user prompt?", "answer": "The system prompt sets persistent behavior, role, and constraints for the model; the user prompt is the specific request or question in a turn."}, {"id": 206, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is prompt injection and how can it be mitigated?", "answer": "Malicious input designed to override a model's original instructions; mitigated via input sanitization, instruction hierarchy, and output validation."}, {"id": 207, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is role prompting (assigning a persona)?", "answer": "Instructing the model to act as a specific persona or expert (e.g., 'You are a senior data scientist') to shape tone and depth of response."}, {"id": 208, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is the difference between instruction-based and example-based prompting?", "answer": "Instruction-based prompting states the task explicitly in words; example-based prompting demonstrates the task through sample input-output pairs."}, {"id": 209, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is self-consistency prompting?", "answer": "Generating multiple reasoning paths for the same question and selecting the most common final answer, improving reliability on reasoning tasks."}, {"id": 210, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is tree-of-thought prompting?", "answer": "Exploring multiple possible reasoning branches and evaluating/pruning them, rather than committing to a single linear chain of thought."}, {"id": 211, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is least-to-most prompting?", "answer": "Breaking a complex problem into a sequence of simpler subproblems, solving each in order, with each step building on the last."}, {"id": 212, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the ReAct prompting pattern?", "answer": "Interleaving explicit reasoning steps with actions (like tool calls) and observations, letting the model adjust its plan based on real results."}, {"id": 213, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is output formatting control (e.g., asking for JSON)?", "answer": "Explicitly instructing the model to return output in a specific structured format, often paired with a schema, for easier downstream parsing."}, {"id": 214, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is temperature's role in prompt output creativity?", "answer": "Higher temperature increases randomness and creative variation in output, while lower temperature makes responses more focused and deterministic."}, {"id": 215, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is prompt chaining?", "answer": "Breaking a complex task into a sequence of prompts, where each prompt's output feeds into the next as input."}, {"id": 216, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is meta-prompting (prompts that generate prompts)?", "answer": "Using an LLM to generate, refine, or optimize prompts for another (or the same) LLM call."}, {"id": 217, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is negative prompting?", "answer": "Explicitly instructing the model on what to avoid doing or including in its output."}, {"id": 218, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the significance of prompt order/placement of instructions?", "answer": "Instructions placed at the beginning or end of a prompt tend to receive more attention than those buried in the middle."}, {"id": 219, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is delimiter usage in prompts and why does it help?", "answer": "Using clear markers (like triple quotes, XML tags, or headers) to separate instructions from content, reducing ambiguity and prompt injection risk."}, {"id": 220, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is few-shot example selection and why does it matter?", "answer": "Choosing representative, diverse, and correctly labeled examples strongly influences how well the model generalizes the intended pattern."}, {"id": 221, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is prompt sensitivity and why do small wording changes affect output?", "answer": "LLMs can produce meaningfully different outputs from minor rephrasing because they pattern-match closely to the exact input phrasing and structure."}, {"id": 222, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is a 'jailbreak' prompt and why is it a safety concern?", "answer": "A prompt crafted to bypass a model's safety guidelines and produce restricted or harmful content, posing risks if not properly defended against."}, {"id": 223, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is guardrailing at the prompt level?", "answer": "Adding explicit constraints, refusal instructions, or scope limits within the prompt itself to keep the model's behavior safe and on-task."}, {"id": 224, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the difference between prompting for reasoning vs prompting for retrieval?", "answer": "Reasoning prompts push the model to work through logic internally; retrieval-oriented prompts focus on incorporating and citing externally supplied context."}, {"id": 225, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is XML/tag-based prompting and why is it useful for structure?", "answer": "Wrapping different parts of a prompt in tags (like <context> or <question>) gives the model clear structural cues, improving parsing and reliability."}, {"id": 226, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is prompt compression?", "answer": "Techniques to shorten a prompt (summarizing context, removing redundancy) while preserving the information needed for a good response, reducing token cost."}, {"id": 227, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the role of examples (few-shot) vs explicit rules in prompt design?", "answer": "Examples implicitly teach patterns via demonstration; explicit rules state requirements directly \u2014 combining both often works better than either alone."}, {"id": 228, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is iterative prompt refinement?", "answer": "Repeatedly testing and adjusting a prompt based on observed outputs until it reliably produces the desired result."}, {"id": 229, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is prompt versioning and why is it important in production?", "answer": "Tracking changes to prompts over time (like code) so teams can test, roll back, and measure the impact of prompt changes systematically."}, {"id": 230, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is a prompt template/variable system?", "answer": "A reusable prompt structure with placeholders that get filled in dynamically with different values at runtime."}, {"id": 231, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is the difference between a task prompt and a conversational prompt?", "answer": "A task prompt targets a single, well-defined output; a conversational prompt maintains context and flow across multiple back-and-forth turns."}, {"id": 232, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is self-critique prompting (ask the model to review its own answer)?", "answer": "Asking the model to evaluate and revise its own initial response, often catching errors or improving clarity before finalizing output."}, {"id": 233, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the role of constraints (word limits, format) in prompt design?", "answer": "Explicit constraints reduce ambiguity and help ensure output fits downstream requirements like UI space or parsing formats."}, {"id": 234, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is prompt leaking?", "answer": "When a model inadvertently reveals its hidden system prompt or internal instructions in its response."}, {"id": 235, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is contrastive prompting (showing good vs bad examples)?", "answer": "Providing both correct and incorrect example outputs to more clearly define the desired behavior boundary for the model."}, {"id": 236, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the impact of context length on prompt effectiveness?", "answer": "Very long prompts can dilute attention to key instructions and increase cost/latency, so relevant information should be prioritized and concise."}, {"id": 237, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is step-back prompting?", "answer": "Asking the model to first consider a more general, abstract question related to the task before answering the specific question, improving reasoning."}, {"id": 238, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is the difference between explicit and implicit instructions in prompts?", "answer": "Explicit instructions state requirements directly and unambiguously; implicit instructions rely on the model inferring intent from context, which is less reliable."}, {"id": 239, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is an evaluation rubric prompt (LLM-as-judge)?", "answer": "A prompt that instructs an LLM to score or compare outputs against defined criteria, used to automate quality evaluation at scale."}, {"id": 240, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is prompt A/B testing?", "answer": "Comparing two or more prompt variations against real or simulated queries to measure which performs better on defined metrics."}, {"id": 241, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is few-shot example ordering bias?", "answer": "The order in which examples are presented can influence model output, sometimes biasing it toward patterns seen most recently."}, {"id": 242, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is the role of 'Let's think step by step' in reasoning tasks?", "answer": "This simple phrase is a well-known trigger for chain-of-thought reasoning, often measurably improving accuracy on multi-step problems."}, {"id": 243, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is structured output prompting (JSON schema, function calling)?", "answer": "Instructing or constraining the model to produce output conforming to a defined schema, making responses reliably machine-parseable."}, {"id": 244, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is the difference between prompting a base model vs an instruction-tuned model?", "answer": "Base models continue text patterns and need careful framing to follow instructions; instruction-tuned models are explicitly trained to follow commands directly."}, {"id": 245, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is prompt engineering's role compared to fine-tuning for behavior control?", "answer": "Prompt engineering is fast, cheap, and reversible for steering behavior; fine-tuning is more durable and consistent but slower and costlier to change."}, {"id": 246, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is persona consistency across a long conversation?", "answer": "Maintaining a defined tone, role, and behavior over many turns, which can drift without reinforcement via system prompts or periodic reminders."}, {"id": 247, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What is prompt debugging?", "answer": "Systematically diagnosing why a prompt produces unexpected output, often by isolating variables, simplifying the prompt, or testing edge cases."}, {"id": 248, "category": "Prompt Engineering", "difficulty": "Hard", "question": "What is a prompt library/prompt management system?", "answer": "A centralized repository for storing, versioning, and reusing prompts across an application or team, improving consistency and maintainability."}, {"id": 249, "category": "Prompt Engineering", "difficulty": "Easy", "question": "What is the risk of over-specifying a prompt?", "answer": "Excessively rigid or lengthy instructions can constrain the model's flexibility, increase token cost, and sometimes cause it to miss the main intent."}, {"id": 250, "category": "Prompt Engineering", "difficulty": "Medium", "question": "What are best practices for writing clear, effective prompts?", "answer": "Be specific, provide relevant context, use examples where helpful, specify format, and iterate based on observed outputs."}, {"id": 251, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is LLMOps?", "answer": "The set of practices and tooling for deploying, monitoring, evaluating, and maintaining LLM-based applications reliably in production."}, {"id": 252, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is model serving and why is inference optimization important?", "answer": "Model serving is running a trained model to handle live requests; optimization matters because inference cost and latency directly affect user experience and expenses."}, {"id": 253, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is latency vs throughput in LLM serving?", "answer": "Latency is the time to respond to a single request; throughput is the number of requests a system can handle per unit time."}, {"id": 254, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is batching in LLM inference?", "answer": "Grouping multiple requests together to process simultaneously on the GPU, improving throughput at the cost of some added latency per request."}, {"id": 255, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is model quantization for deployment (INT8, INT4)?", "answer": "Reducing weight precision to 8-bit or 4-bit integers to shrink model size and speed up inference, with some tradeoff in accuracy."}, {"id": 256, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is vLLM and why is it popular for serving?", "answer": "An open-source inference engine using techniques like PagedAttention to serve LLMs with high throughput and efficient memory use."}, {"id": 257, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is speculative decoding?", "answer": "Using a small draft model to propose several tokens quickly, which a larger model then verifies in parallel, speeding up generation."}, {"id": 258, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is the role of a model gateway/router in production?", "answer": "It routes requests to the appropriate model/provider, handles fallbacks, load balancing, and can enforce consistent policies across multiple backends."}, {"id": 259, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is cost monitoring for LLM applications?", "answer": "Tracking token usage, API costs, and infrastructure spend over time to catch inefficiencies and control budget."}, {"id": 260, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is token-based pricing and how does it affect application design?", "answer": "Most LLM APIs charge per input/output token, incentivizing prompt efficiency, caching, and careful context management to control costs."}, {"id": 261, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is caching (semantic caching) in LLM applications?", "answer": "Storing responses for previously seen (or semantically similar) queries to avoid redundant, costly LLM calls."}, {"id": 262, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is streaming response and why is it used in chat UIs?", "answer": "Sending generated tokens to the client as they're produced rather than waiting for the full response, improving perceived responsiveness."}, {"id": 263, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is rate limiting in LLM APIs?", "answer": "Restricting the number of requests or tokens a client can send in a given time window, protecting infrastructure and controlling cost."}, {"id": 264, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is A/B testing for LLM applications?", "answer": "Running two versions of a prompt, model, or pipeline in parallel with real traffic to compare performance on defined metrics."}, {"id": 265, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is LLM-as-a-judge evaluation?", "answer": "Using a capable LLM to score or compare the outputs of another model against defined criteria, automating evaluation at scale."}, {"id": 266, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is human evaluation vs automated evaluation?", "answer": "Human evaluation captures nuanced quality judgments but is slow and costly; automated evaluation scales cheaply but can miss subtleties."}, {"id": 267, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is a golden dataset for evaluation?", "answer": "A curated set of high-quality input-output examples used as a consistent benchmark to measure model or pipeline performance over time."}, {"id": 268, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is hallucination detection?", "answer": "Techniques (fact-checking against sources, consistency checks, LLM-as-judge) used to identify when a model's output contains fabricated or unsupported claims."}, {"id": 269, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is red-teaming an LLM application?", "answer": "Deliberately probing a system with adversarial inputs to uncover safety weaknesses, biases, or failure modes before deployment."}, {"id": 270, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is prompt injection defense in production systems?", "answer": "Techniques like input sanitization, instruction hierarchies, and output filtering to prevent malicious input from hijacking the model's behavior."}, {"id": 271, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is a data privacy consideration when using third-party LLM APIs?", "answer": "Ensuring sensitive data isn't sent to external providers without proper agreements, redaction, or on-premise alternatives where required."}, {"id": 272, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is on-premise vs cloud-hosted LLM deployment?", "answer": "On-premise deployment runs models on infrastructure the organization controls for privacy/compliance; cloud-hosted uses external providers for convenience and scalability."}, {"id": 273, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is model versioning in production?", "answer": "Tracking which model/prompt version is deployed at any time, enabling rollback and consistent behavior tracking across releases."}, {"id": 274, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is a feedback loop for continuous improvement of an LLM app?", "answer": "Collecting user feedback and production data to identify failure patterns, which then informs prompt, retrieval, or fine-tuning improvements."}, {"id": 275, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is observability for LLM applications (logging, tracing)?", "answer": "Capturing detailed logs of prompts, responses, tool calls, and latencies to debug issues and understand system behavior in production."}, {"id": 276, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is guardrails-as-a-service (e.g., content moderation layers)?", "answer": "External or pluggable services that check inputs/outputs for policy violations, toxicity, or safety issues before they reach the user."}, {"id": 277, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is the role of function/tool call validation in production agents?", "answer": "Verifying that tool call parameters match the expected schema and safe value ranges before executing, preventing errors or unsafe actions."}, {"id": 278, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is fallback handling when an LLM call fails or times out?", "answer": "Strategies like retries, switching to a backup model, or returning a graceful error message to maintain reliability."}, {"id": 279, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is the difference between synchronous and async API calls in production?", "answer": "Synchronous calls block until a response returns; async calls let the application continue other work while waiting, improving overall system efficiency."}, {"id": 280, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is context window cost management in production apps?", "answer": "Techniques like summarization, truncation, and selective retrieval to keep prompts within budget while preserving necessary information."}, {"id": 281, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is model drift and how is it monitored?", "answer": "Gradual degradation in output quality or relevance over time (e.g., due to changing data); monitored via ongoing evaluation against benchmarks."}, {"id": 282, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is canary deployment for a new model version?", "answer": "Rolling out a new model/prompt version to a small percentage of traffic first to catch issues before a full rollout."}, {"id": 283, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is shadow testing?", "answer": "Running a new model/version alongside the current production system on live traffic without affecting users, to compare outputs safely."}, {"id": 284, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is the role of a system prompt in enforcing safety/compliance in production?", "answer": "It sets consistent boundaries and behavior expectations that reduce (though don't eliminate) the chance of unsafe or non-compliant outputs."}, {"id": 285, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is PII redaction and why is it important before sending data to an LLM?", "answer": "Removing or masking personally identifiable information from inputs to protect user privacy and meet regulatory requirements."}, {"id": 286, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is the role of an evaluation harness (e.g., promptfoo, DeepEval)?", "answer": "Tools that automate running test cases against prompts/models and scoring results, streamlining systematic evaluation."}, {"id": 287, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is the concept of 'grounding' in production LLM evaluation?", "answer": "Assessing whether a model's claims are actually supported by provided context or verifiable sources, not just fluent-sounding text."}, {"id": 288, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is the difference between offline and online evaluation?", "answer": "Offline evaluation tests against a fixed dataset before deployment; online evaluation measures real performance on live production traffic."}, {"id": 289, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is model routing (choosing between small/large models based on task complexity)?", "answer": "Directing simple queries to cheaper/faster smaller models and complex ones to larger models, optimizing cost and latency overall."}, {"id": 290, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is the role of fallback models in high-availability systems?", "answer": "Backup models that take over automatically if a primary model/provider is unavailable, improving system reliability."}, {"id": 291, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is a service level objective (SLO) for LLM latency?", "answer": "A target performance metric (e.g., 95th percentile response time under 2 seconds) that the system commits to meeting."}, {"id": 292, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is the role of containerization (Docker) in LLM deployment?", "answer": "Packaging models and dependencies into portable containers ensures consistent deployment across different environments."}, {"id": 293, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is horizontal scaling for LLM inference servers?", "answer": "Adding more server instances to handle increased load, distributing requests across them rather than relying on a single larger machine."}, {"id": 294, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is the GPU vs CPU inference tradeoff?", "answer": "GPUs offer far higher throughput for parallel matrix operations needed by LLMs, while CPUs are cheaper but much slower for large models."}, {"id": 295, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is model compression for edge deployment?", "answer": "Techniques like quantization, pruning, and distillation used to shrink models enough to run on resource-constrained devices."}, {"id": 296, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is the role of API key management and access control in LLM apps?", "answer": "Ensuring only authorized users/services can access the model API, with proper key rotation and scoped permissions to prevent misuse."}, {"id": 297, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What is cost optimization via prompt shortening/compression?", "answer": "Reducing unnecessary tokens in prompts and context to lower per-request cost without sacrificing needed information."}, {"id": 298, "category": "Deployment, Evaluation & Ops", "difficulty": "Hard", "question": "What is the role of monitoring dashboards (e.g., LangSmith, Arize) in LLMOps?", "answer": "They visualize traces, latencies, costs, and evaluation metrics over time, helping teams spot issues and track system health."}, {"id": 299, "category": "Deployment, Evaluation & Ops", "difficulty": "Easy", "question": "What is the difference between staging and production environments for LLM apps?", "answer": "Staging is used to test changes safely with non-live traffic before promoting them to production, which serves real users."}, {"id": 300, "category": "Deployment, Evaluation & Ops", "difficulty": "Medium", "question": "What are best practices for building a reliable production-grade LLM application?", "answer": "Combine strong evaluation, observability, guardrails, fallback handling, cost monitoring, and iterative feedback loops rather than relying on a single safeguard."}];
+
+const STORAGE_KEY = "cwc_llm_agentic_progress_v1";
+let completed = new Set();
+try{
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  completed = new Set(saved);
+}catch(e){ completed = new Set(); }
+
+let activeCategory = "All";
+let activeDifficulty = "All";
+let searchTerm = "";
+let openCards = new Set();
+let expandedAll = false;
+
+const categories = ["All", ...new Set(QUESTIONS.map(q=>q.category))];
+const difficulties = ["All","Easy","Medium","Hard"];
+
+function saveProgress(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed])); }catch(e){}
+}
+
+function renderFilters(){
+  const catWrap = document.getElementById("categoryFilters");
+  categories.forEach(c=>{
+    const chip = document.createElement("span");
+    chip.className = "chip" + (c===activeCategory ? " active":"");
+    chip.textContent = c;
+    chip.onclick = ()=>{ activeCategory = c; render(); };
+    catWrap.appendChild(chip);
+  });
+  const diffWrap = document.getElementById("difficultyFilters");
+  difficulties.forEach(d=>{
+    const chip = document.createElement("span");
+    chip.className = "chip" + (d===activeDifficulty ? " active":"");
+    chip.textContent = d;
+    chip.onclick = ()=>{ activeDifficulty = d; render(); };
+    diffWrap.appendChild(chip);
+  });
+}
+
+function getFiltered(){
+  return QUESTIONS.filter(q=>{
+    if(activeCategory!=="All" && q.category!==activeCategory) return false;
+    if(activeDifficulty!=="All" && q.difficulty!==activeDifficulty) return false;
+    if(searchTerm){
+      const s = searchTerm.toLowerCase();
+      if(!q.question.toLowerCase().includes(s) && !q.answer.toLowerCase().includes(s) && !q.category.toLowerCase().includes(s)) return false;
+    }
+    return true;
+  });
+}
+
+function render(){
+  // refresh filter chip active states
+  document.querySelectorAll("#categoryFilters .chip").forEach(el=>{
+    el.classList.toggle("active", el.textContent===activeCategory);
+  });
+  document.querySelectorAll("#difficultyFilters .chip").forEach(el=>{
+    el.classList.toggle("active", el.textContent===activeDifficulty);
+  });
+
+  const filtered = getFiltered();
+  const list = document.getElementById("questionList");
+  const empty = document.getElementById("emptyState");
+  list.innerHTML = "";
+
+  document.getElementById("resultCount").innerHTML = `Showing <b>${filtered.length}</b> of ${QUESTIONS.length} questions`;
+
+  if(filtered.length===0){
+    empty.style.display = "block";
+  } else {
+    empty.style.display = "none";
+    filtered.forEach(q=>{
+      const card = document.createElement("div");
+      card.className = "q-card" + (completed.has(q.id) ? " done":"") + ((openCards.has(q.id)||expandedAll) ? " open":"");
+      card.innerHTML = `
+        <div class="q-header">
+          <div class="q-check ${completed.has(q.id)?'checked':''}" data-id="${q.id}">${completed.has(q.id)?'✓':''}</div>
+          <div class="q-main">
+            <div class="q-meta">
+              <span class="q-id">#${q.id}</span>
+              <span class="tag cat">${q.category}</span>
+              <span class="tag diff-${q.difficulty}">${q.difficulty}</span>
+            </div>
+            <div class="q-text">${escapeHtml(q.question)}</div>
+          </div>
+          <div class="q-arrow">▼</div>
+        </div>
+        <div class="q-answer"><p><strong>Answer:</strong> ${escapeHtml(q.answer)}</p></div>
+      `;
+      const header = card.querySelector(".q-header");
+      header.addEventListener("click", (e)=>{
+        if(e.target.classList.contains("q-check")) return;
+        if(openCards.has(q.id)){ openCards.delete(q.id); } else { openCards.add(q.id); }
+        card.classList.toggle("open");
+      });
+      const check = card.querySelector(".q-check");
+      check.addEventListener("click", (e)=>{
+        e.stopPropagation();
+        if(completed.has(q.id)){ completed.delete(q.id); }
+        else { completed.add(q.id); }
+        saveProgress();
+        render();
+      });
+      list.appendChild(card);
+    });
+  }
+
+  updateStats();
+}
+
+function updateStats(){
+  document.getElementById("statDone").textContent = completed.size;
+  const pct = Math.round((completed.size / QUESTIONS.length) * 100);
+  document.getElementById("statPercent").textContent = pct + "%";
+  document.getElementById("progressBarFill").style.width = pct + "%";
+}
+
+function escapeHtml(str){
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+document.getElementById("searchInput").addEventListener("input", (e)=>{
+  searchTerm = e.target.value.trim();
+  render();
+});
+
+document.getElementById("expandAllBtn").addEventListener("click", ()=>{
+  expandedAll = !expandedAll;
+  document.getElementById("expandAllBtn").textContent = expandedAll ? "Collapse All" : "Expand All";
+  if(!expandedAll) openCards.clear();
+  render();
+});
+
+document.getElementById("resetProgressBtn").addEventListener("click", ()=>{
+  if(confirm("Reset all progress? This cannot be undone.")){
+    completed = new Set();
+    saveProgress();
+    render();
+  }
+});
+
+renderFilters();
+render();
+</script>
+
+</body>
+</html>
